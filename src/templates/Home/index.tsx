@@ -45,7 +45,7 @@ const Home = ({
 
       <S.SectionNews>
         <Container>
-          <Heading lineLeft lineColor="secondary" color="black">
+          <Heading lineLeft lineColor="primary">
             News
           </Heading>
 
