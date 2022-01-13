@@ -16,6 +16,12 @@ describe('Logo component', () => {
     expect(logo).toHaveStyle({ color: '#FAFAFA' })
   })
 
+  it('should render the logo with id passed', () => {
+    const { container } = renderWithTheme(<Logo id="myId" />)
+
+    expect(container.querySelector('#a_myId')).toBeInTheDocument()
+  })
+
   it('should render a black label when color is passed', () => {
     renderWithTheme(<Logo color="black" />)
 
