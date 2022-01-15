@@ -38,7 +38,7 @@ jest.mock('components/BannerSlider', () => {
   }
 })
 
-describe('Home component', () => {
+describe('Home Page', () => {
   it('should render banner and showcases', () => {
     renderWithTheme(<Home {...props} />)
 

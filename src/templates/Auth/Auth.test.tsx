@@ -3,7 +3,7 @@ import { renderWithTheme } from 'utils/tests/helpers'
 
 import Auth from '.'
 
-describe('Auth component', () => {
+describe('Auth Page', () => {
   it('should render logos, title, subtitle, footer and children', () => {
     renderWithTheme(
       <Auth title="Auth Title">

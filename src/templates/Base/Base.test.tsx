@@ -21,7 +21,7 @@ jest.mock('components/Footer', () => {
   }
 })
 
-describe('Base component', () => {
+describe('Base template', () => {
   it('should render menu, footer and children', () => {
     renderWithTheme(
       <Base>

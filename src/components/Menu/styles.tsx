@@ -1,13 +1,13 @@
 import styled, { css } from 'styled-components'
 import media from 'styled-media-query'
 
-export const Wrapper = styled.menu`
-  ${({ theme }) => css`
+export const Wrapper = styled.menu<MenuFullProps>`
+  ${({ theme, isOpen }) => css`
     display: flex;
     align-items: center;
-    padding: ${theme.spacings.small};
+    padding: ${theme.spacings.small} 0;
     position: relative;
-    z-index: ${theme.layers.menu};
+    z-index: ${isOpen ? theme.layers.menu : `calc(${theme.layers.menu} - 1)`};
   `}
 `
 
@@ -21,18 +21,31 @@ export const LogoWrapper = styled.div`
 
 export const IconWrapper = styled.div`
   ${({ theme }) => css`
-    cursor: pointer;
     color: ${theme.colors.white};
+    cursor: pointer;
     width: 2.4rem;
     height: 2.4rem;
+  `}
+`
+
+export const MenuGroup = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+    flex-grow: 1;
+    justify-content: flex-end;
+    align-items: center;
+    z-index: ${theme.layers.menu} + 1;
+    > div {
+      margin-left: ${theme.spacings.xsmall};
+    }
   `}
 `
 
 export const MenuNav = styled.div`
   ${({ theme }) => css`
     ${media.greaterThan('medium')`
-    margin-left: ${theme.spacings.small};
-  `}
+			margin-left: ${theme.spacings.small};
+		`}
   `}
 `
 
@@ -44,7 +57,6 @@ export const MenuLink = styled.a`
     margin: 0.3rem ${theme.spacings.small} 0;
     text-decoration: none;
     text-align: center;
-
     &:hover {
       &::after {
         content: '';
@@ -54,7 +66,6 @@ export const MenuLink = styled.a`
         background-color: ${theme.colors.primary};
         animation: hoverAnimation 0.2s forwards;
       }
-
       @keyframes hoverAnimation {
         from {
           width: 0;
@@ -65,19 +76,6 @@ export const MenuLink = styled.a`
           left: 0;
         }
       }
-    }
-  `}
-`
-
-export const MenuGroup = styled.div`
-  ${({ theme }) => css`
-    display: flex;
-    flex-grow: 1;
-    align-items: center;
-    justify-content: flex-end;
-
-    > div {
-      margin-left: ${theme.spacings.xsmall};
     }
   `}
 `
@@ -103,7 +101,7 @@ export const MenuFull = styled.nav<MenuFullProps>`
     transition: opacity 0.3s ease-in-out;
     opacity: ${isOpen ? 1 : 0};
     pointer-events: ${isOpen ? 'all' : 'none'};
-
+    visibility: ${isOpen ? 'visible' : 'hidden'};
     > svg {
       position: absolute;
       top: 0;
@@ -113,7 +111,6 @@ export const MenuFull = styled.nav<MenuFullProps>`
       width: 2.4rem;
       height: 2.4rem;
     }
-
     ${MenuNav} {
       display: flex;
       align-items: center;
@@ -121,18 +118,16 @@ export const MenuFull = styled.nav<MenuFullProps>`
       flex: 1;
       flex-direction: column;
     }
-
     ${MenuLink} {
       color: ${theme.colors.black};
       font-weight: ${theme.font.bold};
       font-size: ${theme.font.sizes.xlarge};
       margin-bottom: ${theme.spacings.small};
-      transform: ${isOpen ? 'translateX(0)' : 'translateY(3rem)'};
+      transform: ${isOpen ? 'translateY(0)' : 'translateY(3rem)'};
       transition: transform 0.3s ease-in-out;
     }
-
     ${RegisterBox} {
-      transform: ${isOpen ? 'translateX(0)' : 'translateY(3rem)'};
+      transform: ${isOpen ? 'translateY(0)' : 'translateY(3rem)'};
       transition: transform 0.3s ease-in-out;
     }
   `}
