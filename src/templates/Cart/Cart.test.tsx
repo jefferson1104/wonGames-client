@@ -52,7 +52,7 @@ jest.mock('components/Empty', () => ({
   }
 }))
 
-describe('<Cart />', () => {
+describe('<Cart /> Page', () => {
   it('should render sections', () => {
     renderWithTheme(<Cart {...props} />)
 
