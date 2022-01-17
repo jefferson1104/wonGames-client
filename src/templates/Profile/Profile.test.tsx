@@ -29,7 +29,7 @@ jest.mock('components/ProfileMenu', () => ({
   }
 }))
 
-describe('<Profile />', () => {
+describe('Profile Page', () => {
   it('should render sections', () => {
     renderWithTheme(<Profile>Lorem Ipsum</Profile>)
 
