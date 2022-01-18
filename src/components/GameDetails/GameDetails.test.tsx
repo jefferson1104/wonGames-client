@@ -8,7 +8,7 @@ const props: GameDetailsProps = {
   publisher: 'PUB Games',
   platforms: ['windows', 'mac', 'linux'],
   releaseDate: '2020-11-21T23:00:00',
-  rating: 'pegi3',
+  rating: 'FREE',
   genres: ['Role-playing', 'Narrative']
 }
 
@@ -51,7 +51,7 @@ describe('GameDetails component', () => {
     expect(dateFormated).toBeInTheDocument()
   })
 
-  it('should render free rating when pegi3', () => {
+  it('should render free rating when FREE', () => {
     renderWithTheme(<GameDetails {...props} />)
 
     const freeRating = screen.getByText(/free/i)
