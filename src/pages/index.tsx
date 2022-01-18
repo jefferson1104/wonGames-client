@@ -7,7 +7,10 @@ export default function Index(props: HomeTemplateProps) {
   return <Home {...props} />
 }
 
-export function getServerSideProps() {
+// getStaticProps => gerar estático em build time
+// getServerSideprops => gerar via ssr a cada request (nunca vai para o bundle do client)
+// getInitialProps => gerar via ssr a cada request (vai para o client, faz o hydrate do lado do cliente depois do primeiro request)
+export async function getServerSideProps() {
   return {
     props: {
       banners: BannersMock,
