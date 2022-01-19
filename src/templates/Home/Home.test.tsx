@@ -10,12 +10,15 @@ import Home from '.'
 
 const props = {
   banners: BannersMock,
+  newGamesTitle: 'New Games',
   newGames: GamesMock,
+  mostPopularGamesTitle: 'Popular Games',
   mostPopularHighlight: HighlightMock,
   mostPopularGames: GamesMock,
+  upcomingGamesTitle: 'Upcoming Games',
   upcommingGames: GamesMock,
   upcommingHighligth: HighlightMock,
-  upcommingMoreGames: GamesMock,
+  freeGamesTitle: 'Free Games',
   freeGames: GamesMock,
   freeHighligth: HighlightMock
 }
@@ -48,6 +51,6 @@ describe('Home Page', () => {
 
     // verifica renderizacao de todas showcases
     const showcases = screen.getAllByTestId('Mock Showcase')
-    expect(showcases).toHaveLength(5)
+    expect(showcases).toHaveLength(4)
   })
 })
