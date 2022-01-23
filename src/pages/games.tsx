@@ -10,24 +10,19 @@ export default function GamesPage(props: GamesTemplateProps) {
   return <GamesTemplate {...props} />
 }
 
+// pegando dados da API GraphQL com apollo no lado do servidor
 export async function getStaticProps() {
   const apolloClient = initializeApollo()
 
-  const { data } = await apolloClient.query<QueryGames, QueryGamesVariables>({
+  await apolloClient.query<QueryGames, QueryGamesVariables>({
     query: QUERY_GAMES,
-    variables: { limit: 9 }
+    variables: { limit: 15 }
   })
 
   return {
     props: {
       revalidate: 60, // 60 seconds
-      games: data.games.map((game) => ({
-        title: game.name,
-        slug: game.slug,
-        developer: game.developers[0].name,
-        img: `http://localhost:1337${game.cover!.url}`,
-        price: game.price
-      })),
+      initialApolloState: apolloClient.cache.extract(),
       filterItems: filterItemsMock
     }
   }

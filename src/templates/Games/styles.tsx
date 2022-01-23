@@ -27,3 +27,13 @@ export const Showmore = styled.div`
     }
   `}
 `
+
+export const Loading = styled.p`
+  ${({ theme }) => css`
+    color: ${theme.colors.white};
+    text-align: center;
+    padding: ${theme.spacings.medium};
+    text-transform: uppercase;
+    font-weight: bold;
+  `}
+`

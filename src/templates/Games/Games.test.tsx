@@ -1,9 +1,39 @@
 import { screen } from '@testing-library/react'
 import { renderWithTheme } from 'utils/tests/helpers'
-import gamesMock from 'components/GameCardSlider/mock'
-import filterItemsMock from 'components/ExploreSidebar/mock'
+import { MockedProvider } from '@apollo/client/testing'
+import { QUERY_GAMES } from 'graphql/queries/games'
 
 import Games from '.'
+
+import filterItemsMock from 'components/ExploreSidebar/mock'
+
+const gamesMock = {
+  request: {
+    query: QUERY_GAMES,
+    variables: { limit: 15, where: {} }
+  },
+  result: {
+    data: {
+      games: [
+        {
+          id: '1',
+          name: 'Sample Game',
+          slug: 'sample-game',
+          price: 518.39,
+          developers: [{ name: 'sample developer' }],
+          cover: {
+            url: 'sample-game.jpg'
+          },
+          __typename: 'Game'
+        }
+      ],
+      gamesConnection: {
+        values: [{ id: '1' }, { id: '2' }],
+        __typename: 'GameConnection'
+      }
+    }
+  }
+}
 
 jest.mock('templates/Base', () => ({
   __esModule: true,
@@ -27,16 +57,13 @@ jest.mock('components/GameCard', () => ({
 }))
 
 describe('Games Page', () => {
-  it('should render sections', () => {
+  it('should render sections', async () => {
     renderWithTheme(
-      <Games filterItems={filterItemsMock} games={[gamesMock[0]]} />
+      <MockedProvider mocks={[gamesMock]} addTypename={false}>
+        <Games filterItems={filterItemsMock} />
+      </MockedProvider>
     )
 
-    expect(screen.getByTestId('Mock ExploreSidebar')).toBeInTheDocument()
-    expect(screen.getByTestId('Mock GameCard')).toBeInTheDocument()
-
-    expect(
-      screen.getByRole('button', { name: /show more/i })
-    ).toBeInTheDocument()
+    expect(await screen.findByText(/Show more/i)).toBeInTheDocument()
   })
 })
