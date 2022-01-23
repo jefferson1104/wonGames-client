@@ -7,34 +7,6 @@ import Games from '.'
 
 import filterItemsMock from 'components/ExploreSidebar/mock'
 
-const gamesMock = {
-  request: {
-    query: QUERY_GAMES,
-    variables: { limit: 15, where: {} }
-  },
-  result: {
-    data: {
-      games: [
-        {
-          id: '1',
-          name: 'Sample Game',
-          slug: 'sample-game',
-          price: 518.39,
-          developers: [{ name: 'sample developer' }],
-          cover: {
-            url: 'sample-game.jpg'
-          },
-          __typename: 'Game'
-        }
-      ],
-      gamesConnection: {
-        values: [{ id: '1' }, { id: '2' }],
-        __typename: 'GameConnection'
-      }
-    }
-  }
-}
-
 jest.mock('templates/Base', () => ({
   __esModule: true,
   default: function Mock({ children }: { children: React.ReactNode }) {
@@ -49,21 +21,66 @@ jest.mock('components/ExploreSidebar', () => ({
   }
 }))
 
-jest.mock('components/GameCard', () => ({
-  __esModule: true,
-  default: function Mock() {
-    return <div data-testid="Mock GameCard" />
-  }
-}))
-
 describe('Games Page', () => {
-  it('should render sections', async () => {
+  it('should render loading when starting the template', () => {
     renderWithTheme(
-      <MockedProvider mocks={[gamesMock]} addTypename={false}>
+      <MockedProvider mocks={[]} addTypename={false}>
         <Games filterItems={filterItemsMock} />
       </MockedProvider>
     )
 
-    expect(await screen.findByText(/Show more/i)).toBeInTheDocument()
+    expect(screen.getByText(/loading.../i)).toBeInTheDocument()
+  })
+
+  it('should render sections', async () => {
+    renderWithTheme(
+      <MockedProvider
+        mocks={[
+          {
+            request: {
+              query: QUERY_GAMES,
+              variables: { limit: 15 }
+            },
+            result: {
+              data: {
+                games: [
+                  {
+                    name: 'RimWorld',
+                    slug: 'rimworld',
+                    cover: {
+                      url: '/uploads/rimworld_8e93acc963.jpg'
+                    },
+                    developers: [{ name: 'Ludeon Studios' }],
+                    price: 65.99,
+                    __typename: 'Game'
+                  }
+                ]
+              }
+            }
+          }
+        ]}
+        addTypename={false}
+      >
+        <Games filterItems={filterItemsMock} />
+      </MockedProvider>
+    )
+
+    // it starts without data, show loading
+    expect(screen.getByText(/loading.../i)).toBeInTheDocument()
+
+    // we wait until we have data to get the elements
+    expect(await screen.findByTestId('Mock ExploreSidebar')).toBeInTheDocument()
+
+    expect(await screen.findByText(/rimworld/i)).toBeInTheDocument()
+
+    expect(
+      await screen.findByRole('button', { name: /show more/i })
+    ).toBeInTheDocument()
+
+    /*
+      GET (getByText): tem certeza do elemento
+      QUERY (queryByText): Não tem o elemento
+      FIND (findByText): processo assincrono
+    */
   })
 })
