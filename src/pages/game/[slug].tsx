@@ -51,7 +51,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     QueryGameBySlugVariables
   >({
     query: QUERY_GAME_BY_SLUG,
-    variables: { slug: `${params?.slug}` }
+    variables: { slug: `${params?.slug}` },
+    fetchPolicy: 'no-cache' // isso garante sempre dados novos ao gerar o estático
   })
 
   // se não existir nenhum jogo, dessa forma o nextjs já envia para pagina 404
@@ -74,8 +75,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   >({ query: QUERY_UPCOMING, variables: { date: TODAY } })
 
   return {
+    revalidate: 60, // 60 segundos
     props: {
-      revalidate: 60,
       cover: `http://localhost:1337${game.cover?.src}`,
       gameInfo: {
         title: game.name,
