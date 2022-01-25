@@ -1,11 +1,14 @@
 import { screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+
 import { renderWithTheme } from 'utils/tests/helpers'
+import apolloCache from 'utils/apolloCache'
 import { MockedProvider } from '@apollo/client/testing'
-import { QUERY_GAMES } from 'graphql/queries/games'
+
+import { fetchMoreMock, gamesMock } from './mock'
+import filterItemsMock from 'components/ExploreSidebar/mock'
 
 import Games from '.'
-
-import filterItemsMock from 'components/ExploreSidebar/mock'
 
 jest.mock('templates/Base', () => ({
   __esModule: true,
@@ -34,36 +37,16 @@ describe('Games Page', () => {
 
   it('should render sections', async () => {
     renderWithTheme(
-      <MockedProvider
-        mocks={[
-          {
-            request: {
-              query: QUERY_GAMES,
-              variables: { limit: 15 }
-            },
-            result: {
-              data: {
-                games: [
-                  {
-                    name: 'RimWorld',
-                    slug: 'rimworld',
-                    cover: {
-                      url: '/uploads/rimworld_8e93acc963.jpg'
-                    },
-                    developers: [{ name: 'Ludeon Studios' }],
-                    price: 65.99,
-                    __typename: 'Game'
-                  }
-                ]
-              }
-            }
-          }
-        ]}
-        addTypename={false}
-      >
+      <MockedProvider mocks={[gamesMock]} addTypename={false}>
         <Games filterItems={filterItemsMock} />
       </MockedProvider>
     )
+
+    /*
+      GET (getByText): tem certeza do elemento
+      QUERY (queryByText): Não tem o elemento
+      FIND (findByText): processo assincrono
+    */
 
     // it starts without data, show loading
     expect(screen.getByText(/loading.../i)).toBeInTheDocument()
@@ -71,16 +54,24 @@ describe('Games Page', () => {
     // we wait until we have data to get the elements
     expect(await screen.findByTestId('Mock ExploreSidebar')).toBeInTheDocument()
 
-    expect(await screen.findByText(/rimworld/i)).toBeInTheDocument()
+    expect(await screen.findByText(/sample game/i)).toBeInTheDocument()
 
     expect(
       await screen.findByRole('button', { name: /show more/i })
     ).toBeInTheDocument()
+  })
 
-    /*
-      GET (getByText): tem certeza do elemento
-      QUERY (queryByText): Não tem o elemento
-      FIND (findByText): processo assincrono
-    */
+  it('should render more games when show more is clicked', async () => {
+    renderWithTheme(
+      <MockedProvider mocks={[gamesMock, fetchMoreMock]} cache={apolloCache}>
+        <Games filterItems={filterItemsMock} />
+      </MockedProvider>
+    )
+
+    expect(await screen.findByText(/sample game/i)).toBeInTheDocument()
+
+    userEvent.click(await screen.findByRole('button', { name: /show more/i }))
+
+    expect(await screen.findByText(/fetch more game/i)).toBeInTheDocument()
   })
 })
