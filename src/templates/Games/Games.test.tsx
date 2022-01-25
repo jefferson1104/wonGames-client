@@ -37,16 +37,6 @@ jest.mock('next/link', () => ({
 }))
 
 describe('Games Page', () => {
-  it('should render loading when starting the template', () => {
-    renderWithTheme(
-      <MockedProvider mocks={[]} addTypename={false}>
-        <Games filterItems={filterItemsMock} />
-      </MockedProvider>
-    )
-
-    expect(screen.getByText(/loading.../i)).toBeInTheDocument()
-  })
-
   it('should render sections', async () => {
     renderWithTheme(
       <MockedProvider mocks={[gamesMock]} addTypename={false}>
@@ -59,9 +49,6 @@ describe('Games Page', () => {
       QUERY (queryByText): Não tem o elemento
       FIND (findByText): processo assincrono
     */
-
-    // it starts without data, show loading
-    expect(screen.getByText(/loading.../i)).toBeInTheDocument()
 
     expect(await screen.findByText(/Price/i)).toBeInTheDocument()
     expect(await screen.findByText(/sample game/i)).toBeInTheDocument()
