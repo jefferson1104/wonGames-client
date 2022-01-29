@@ -1,13 +1,13 @@
-import { screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor } from 'utils/test-utils'
 import theme from 'styles/theme'
-import { renderWithTheme } from 'utils/tests/helpers'
+
 import userEvent from '@testing-library/user-event'
 
 import Checkbox from '.'
 
 describe('Checkbox component', () => {
   it('should render with label', () => {
-    renderWithTheme(<Checkbox label="checkbox label" labelFor="check" />)
+    render(<Checkbox label="checkbox label" labelFor="check" />)
 
     // pegando input a partir do papel / role
     const checkboxInput = screen.getByRole('checkbox')
@@ -23,7 +23,7 @@ describe('Checkbox component', () => {
   })
 
   it('should render without label', () => {
-    renderWithTheme(<Checkbox />)
+    render(<Checkbox />)
 
     const checkboxLabel = screen.queryByLabelText('checkbox')
 
@@ -31,7 +31,7 @@ describe('Checkbox component', () => {
   })
 
   it('should render with black label', () => {
-    renderWithTheme(
+    render(
       <Checkbox label="checkbox label" labelFor="check" labelColor="black" />
     )
 
@@ -43,7 +43,7 @@ describe('Checkbox component', () => {
   it('should dispatch onCheck when status changes', async () => {
     const onCheck = jest.fn()
 
-    renderWithTheme(<Checkbox label="Checkbox" onCheck={onCheck} />)
+    render(<Checkbox label="Checkbox" onCheck={onCheck} />)
 
     expect(onCheck).not.toHaveBeenCalled()
 
@@ -60,7 +60,7 @@ describe('Checkbox component', () => {
   it('should dispatch onCheck when status changes', async () => {
     const onCheck = jest.fn()
 
-    renderWithTheme(<Checkbox label="Checkbox" onCheck={onCheck} isChecked />)
+    render(<Checkbox label="Checkbox" onCheck={onCheck} isChecked />)
 
     const checkbox = screen.getByRole('checkbox')
 
@@ -73,7 +73,7 @@ describe('Checkbox component', () => {
   })
 
   it('should be accessible with tab', () => {
-    renderWithTheme(<Checkbox label="Checkbox" labelFor="Checkbox" />)
+    render(<Checkbox label="Checkbox" labelFor="Checkbox" />)
 
     expect(document.body).toHaveFocus()
 

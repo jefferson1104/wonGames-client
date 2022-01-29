@@ -1,11 +1,12 @@
+import { render } from 'utils/test-utils'
+
 import theme from 'styles/theme'
-import { renderWithTheme } from 'utils/tests/helpers'
 
 import { Container } from '.'
 
 describe('Container component', () => {
   it('should render container component', () => {
-    const { container } = renderWithTheme(
+    const { container } = render(
       <Container>
         <span>Won Games</span>
       </Container>

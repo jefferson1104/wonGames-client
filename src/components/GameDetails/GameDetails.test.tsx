@@ -1,5 +1,4 @@
-import { screen } from '@testing-library/react'
-import { renderWithTheme } from 'utils/tests/helpers'
+import { render, screen } from 'utils/test-utils'
 
 import GameDetails, { GameDetailsProps } from '.'
 
@@ -14,7 +13,7 @@ const props: GameDetailsProps = {
 
 describe('GameDetails component', () => {
   it('should render the blocks', () => {
-    renderWithTheme(<GameDetails {...props} />)
+    render(<GameDetails {...props} />)
 
     const headingDeveloper = screen.getByRole('heading', { name: /Developer/i })
     const headingRelease = screen.getByRole('heading', { name: /Release/i })
@@ -32,7 +31,7 @@ describe('GameDetails component', () => {
   })
 
   it('should render platforms icons', () => {
-    renderWithTheme(<GameDetails {...props} />)
+    render(<GameDetails {...props} />)
 
     const linux = screen.getByRole('img', { name: /linux/i })
     const windows = screen.getByRole('img', { name: /windows/i })
@@ -44,7 +43,7 @@ describe('GameDetails component', () => {
   })
 
   it('should render the formated date', () => {
-    renderWithTheme(<GameDetails {...props} />)
+    render(<GameDetails {...props} />)
 
     const dateFormated = screen.getByText('Nov 21, 2020')
 
@@ -52,7 +51,7 @@ describe('GameDetails component', () => {
   })
 
   it('should render free rating when FREE', () => {
-    renderWithTheme(<GameDetails {...props} />)
+    render(<GameDetails {...props} />)
 
     const freeRating = screen.getByText(/free/i)
 
@@ -60,7 +59,7 @@ describe('GameDetails component', () => {
   })
 
   it('should render publisher', () => {
-    renderWithTheme(<GameDetails {...props} />)
+    render(<GameDetails {...props} />)
 
     const publisher = screen.getByText(/PUB Games/i)
 
@@ -68,7 +67,7 @@ describe('GameDetails component', () => {
   })
 
   it('should render developer', () => {
-    renderWithTheme(<GameDetails {...props} />)
+    render(<GameDetails {...props} />)
 
     const developer = screen.getByText(/different tales/i)
 
@@ -76,7 +75,7 @@ describe('GameDetails component', () => {
   })
 
   it('should render 18+ rating when pegi18', () => {
-    renderWithTheme(<GameDetails {...props} rating="pegi18" />)
+    render(<GameDetails {...props} rating="pegi18" />)
 
     const freeRating = screen.getByText(/18\+/i)
 
@@ -84,7 +83,7 @@ describe('GameDetails component', () => {
   })
 
   it('should render a list of genres', () => {
-    renderWithTheme(<GameDetails {...props} />)
+    render(<GameDetails {...props} />)
 
     const genres = screen.getByText(/Role-playing \/ Narrative/i)
 

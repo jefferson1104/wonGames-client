@@ -1,11 +1,10 @@
-import { screen } from '@testing-library/react'
-import { renderWithTheme } from 'utils/tests/helpers'
+import { render, screen } from 'utils/test-utils'
 
 import Ribbon from '.'
 
 describe('Ribbon component', () => {
   it('should render the text correctly', () => {
-    renderWithTheme(<Ribbon>Best Seller</Ribbon>)
+    render(<Ribbon>Best Seller</Ribbon>)
 
     const ribbon = screen.getByText(/Best Seller/i)
 
@@ -13,7 +12,7 @@ describe('Ribbon component', () => {
   })
 
   it('should render with the primary color', () => {
-    renderWithTheme(<Ribbon>Best Seller</Ribbon>)
+    render(<Ribbon>Best Seller</Ribbon>)
 
     const ribbon = screen.getByText(/Best Seller/i)
 
@@ -21,7 +20,7 @@ describe('Ribbon component', () => {
   })
 
   it('should render with the secondary color', () => {
-    renderWithTheme(<Ribbon color="secondary">Best Seller</Ribbon>)
+    render(<Ribbon color="secondary">Best Seller</Ribbon>)
 
     const ribbon = screen.getByText(/Best Seller/i)
 
@@ -29,7 +28,7 @@ describe('Ribbon component', () => {
   })
 
   it('should render with the normal size as default', () => {
-    renderWithTheme(<Ribbon>Best Seller</Ribbon>)
+    render(<Ribbon>Best Seller</Ribbon>)
 
     const ribbon = screen.getByText(/Best Seller/i)
 
@@ -37,7 +36,7 @@ describe('Ribbon component', () => {
   })
 
   it('should render with the small size', () => {
-    renderWithTheme(<Ribbon size="small">Best Seller</Ribbon>)
+    render(<Ribbon size="small">Best Seller</Ribbon>)
 
     const ribbon = screen.getByText(/Best Seller/i)
 

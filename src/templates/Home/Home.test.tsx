@@ -1,6 +1,5 @@
 import 'match-media-mock'
-import { screen } from '@testing-library/react'
-import { renderWithTheme } from 'utils/tests/helpers'
+import { render, screen } from 'utils/test-utils'
 
 import BannersMock from 'components/BannerSlider/mock'
 import GamesMock from 'components/GameCardSlider/mock'
@@ -43,7 +42,7 @@ jest.mock('components/BannerSlider', () => {
 
 describe('Home Page', () => {
   it('should render banner and showcases', () => {
-    renderWithTheme(<Home {...props} />)
+    render(<Home {...props} />)
 
     // verifica se renderiza BannerSlider
     const banner = screen.getByTestId(/Mock Banner Slider/i)

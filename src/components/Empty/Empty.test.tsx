@@ -1,5 +1,4 @@
-import { screen } from '@testing-library/react'
-import { renderWithTheme } from 'utils/tests/helpers'
+import { render, screen } from 'utils/test-utils'
 
 import Empty from '.'
 
@@ -10,7 +9,7 @@ const propsMock = {
 
 describe('Empty component', () => {
   it('should render correctly', () => {
-    const { container } = renderWithTheme(<Empty {...propsMock} hasLink />)
+    const { container } = render(<Empty {...propsMock} hasLink />)
 
     const image = screen.getByRole('image', {
       name: /a gamer in a couch playing videogame/i
@@ -28,7 +27,7 @@ describe('Empty component', () => {
   })
 
   it('should not render link when hasLink not passed', () => {
-    renderWithTheme(<Empty {...propsMock} />)
+    render(<Empty {...propsMock} />)
 
     const link = screen.queryByRole('link', { name: /go back to store/i })
 

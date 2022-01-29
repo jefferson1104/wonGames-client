@@ -1,5 +1,4 @@
-import { screen } from '@testing-library/react'
-import { renderWithTheme } from 'utils/tests/helpers'
+import { render, screen } from 'utils/test-utils'
 
 import GameItem from '.'
 
@@ -11,7 +10,7 @@ const propsMock = {
 
 describe('GameItem component', () => {
   it('should render the item', () => {
-    renderWithTheme(<GameItem {...propsMock} />)
+    render(<GameItem {...propsMock} />)
 
     const img = screen.getByRole('img', { name: propsMock.title })
     const title = screen.getByRole('heading', { name: propsMock.title })
@@ -25,7 +24,7 @@ describe('GameItem component', () => {
   it('should render the item with download link', () => {
     const downloadLink = 'https://example-download-link.com'
 
-    renderWithTheme(<GameItem {...propsMock} downloadLink={downloadLink} />)
+    render(<GameItem {...propsMock} downloadLink={downloadLink} />)
 
     expect(
       screen.getByRole('link', { name: `Get ${propsMock.title} here` })
@@ -40,7 +39,7 @@ describe('GameItem component', () => {
       purchaseDate: 'Purchase made on 07/20/2020 at 20:32'
     }
 
-    renderWithTheme(<GameItem {...propsMock} paymentInfo={paymentInfo} />)
+    render(<GameItem {...propsMock} paymentInfo={paymentInfo} />)
 
     expect(screen.getByRole('img', { name: paymentInfo.flag })).toHaveAttribute(
       'src',

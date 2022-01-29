@@ -1,12 +1,11 @@
-import { screen } from '@testing-library/react'
-import { renderWithTheme } from 'utils/tests/helpers'
+import { render, screen } from 'utils/test-utils'
 import { AddShoppingCart } from '@styled-icons/material/AddShoppingCart'
 
 import Button from '.'
 
 describe('Button component', () => {
   it('should render the medium size by default', () => {
-    renderWithTheme(<Button>Buy now</Button>)
+    render(<Button>Buy now</Button>)
 
     const button = screen.getByRole('button', { name: /Buy now/i })
 
@@ -18,7 +17,7 @@ describe('Button component', () => {
   })
 
   it('should render the small size', () => {
-    renderWithTheme(<Button size="small">Buy now</Button>)
+    render(<Button size="small">Buy now</Button>)
 
     const button = screen.getByRole('button', { name: /Buy now/i })
 
@@ -29,7 +28,7 @@ describe('Button component', () => {
   })
 
   it('should render the large size', () => {
-    renderWithTheme(<Button size="large">Buy now</Button>)
+    render(<Button size="large">Buy now</Button>)
 
     const button = screen.getByRole('button', { name: /Buy now/i })
 
@@ -41,7 +40,7 @@ describe('Button component', () => {
   })
 
   it('should render fullWidth version', () => {
-    renderWithTheme(<Button fullWidth>Buy now</Button>)
+    render(<Button fullWidth>Buy now</Button>)
 
     const button = screen.getByRole('button', { name: /Buy now/i })
 
@@ -51,7 +50,7 @@ describe('Button component', () => {
   })
 
   it('should render an icon version', () => {
-    renderWithTheme(
+    render(
       <Button icon={<AddShoppingCart data-testid="icon" />}>Buy now</Button>
     )
 
@@ -63,7 +62,7 @@ describe('Button component', () => {
   })
 
   it('should render a minimal version', () => {
-    renderWithTheme(
+    render(
       <Button icon={<AddShoppingCart data-testid="icon" />} minimal>
         Buy now
       </Button>
@@ -76,7 +75,7 @@ describe('Button component', () => {
   })
 
   it('should render a disabled button', () => {
-    renderWithTheme(<Button disabled>Buy now</Button>)
+    render(<Button disabled>Buy now</Button>)
 
     const button = screen.getByRole('button', { name: /buy now/i })
 
@@ -86,7 +85,7 @@ describe('Button component', () => {
   })
 
   it('should render button as a link', () => {
-    renderWithTheme(
+    render(
       <Button as="a" href="/link">
         Buy now
       </Button>
