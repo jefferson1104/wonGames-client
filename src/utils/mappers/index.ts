@@ -3,6 +3,7 @@ import {
   QueryHome_banners,
   QueryHome_sections_freeGames_highlight
 } from 'graphql/generated/QueryHome'
+
 import FormatPrice from 'utils/format-price'
 
 export const bannerMapper = (banners: QueryHome_banners[]) => {
