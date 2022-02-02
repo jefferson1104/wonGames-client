@@ -10,7 +10,6 @@ import CartList, { CartListProps } from 'components/CartList'
 import PaymentOptions, { PaymentOptionsProps } from 'components/PaymentOptions'
 
 import * as S from './styles'
-import Empty from 'components/Empty'
 
 export type CartProps = {
   recommendedTitle: string
@@ -23,8 +22,6 @@ const Cart = ({
   recommendedTitle,
   recommendedGames,
   recommendedHighlight,
-  items,
-  total,
   cards
 }: CartProps) => {
   const handlePayment = () => ({})
@@ -35,20 +32,10 @@ const Cart = ({
         <Heading lineLeft lineColor="secondary">
           My cart
         </Heading>
-
-        {items?.length ? (
-          <S.Content>
-            <CartList items={items} total={total} />
-            <PaymentOptions cards={cards} handlePayment={handlePayment} />
-          </S.Content>
-        ) : (
-          <Empty
-            title="Your cart is empty"
-            description="Go back to the store and explore great games and offers"
-            hasLink
-          />
-        )}
-
+        <S.Content>
+          <CartList />
+          <PaymentOptions cards={cards} handlePayment={handlePayment} />
+        </S.Content>
         <Divider />
       </Container>
 
