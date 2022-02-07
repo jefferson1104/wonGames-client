@@ -1,4 +1,7 @@
 import Link from 'next/link'
+import { signOut } from 'next-auth/client'
+
+import Dropdown from 'components/Dropdown'
 
 import {
   AccountCircle,
@@ -6,9 +9,6 @@ import {
   ExitToApp
 } from '@styled-icons/material-outlined'
 import { ChevronDown } from '@styled-icons/boxicons-regular'
-
-import Dropdown from 'components/Dropdown'
-
 import * as S from './styles'
 
 export type UserDropdownProps = {
@@ -41,12 +41,10 @@ const UserDropdown = ({ username }: UserDropdownProps) => {
           </S.Link>
         </Link>
 
-        <Link href="/logout" passHref>
-          <S.Link>
-            <ExitToApp />
-            <span>Sign out</span>
-          </S.Link>
-        </Link>
+        <S.Link role="button" onClick={() => signOut()} title="Sign out">
+          <ExitToApp />
+          <span>Sign out</span>
+        </S.Link>
       </S.Nav>
     </Dropdown>
   )

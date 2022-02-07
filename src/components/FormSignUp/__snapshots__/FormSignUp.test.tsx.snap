@@ -1,12 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<FormSignUp /> should render the form 1`] = `
-.c4 {
-  display: inline-block;
-  vertical-align: middle;
-  overflow: hidden;
-}
-
 .c2 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -114,6 +108,12 @@ exports[`<FormSignUp /> should render the form 1`] = `
 .c8 a:hover {
   color: #29b3a3;
   border-bottom: 0.1rem solid #29b3a3;
+}
+
+.c4 {
+  display: inline-block;
+  vertical-align: middle;
+  overflow: hidden;
 }
 
 <div
@@ -279,7 +279,9 @@ exports[`<FormSignUp /> should render the form 1`] = `
       type="submit"
     >
       <span>
-        Sign up now
+        <span>
+          Sign up now
+        </span>
       </span>
     </button>
     <div
