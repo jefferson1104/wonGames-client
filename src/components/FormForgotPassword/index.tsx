@@ -1,22 +1,20 @@
 import { useState } from 'react'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 import { signIn } from 'next-auth/client'
 
-import { FormWrapper, FormLink, FormLoading, FormError } from 'components/Form'
+import { FormWrapper, FormLoading, FormError } from 'components/Form'
 import TextField from 'components/TextField'
 import Button from 'components/Button'
 
-import { FieldErrors, signInValidate } from 'utils/validations'
+import { FieldErrors } from 'utils/validations'
 
-import { Email, Lock, ErrorOutline } from 'styled-icons/material-outlined'
-import * as S from './styles'
+import { Email, ErrorOutline } from 'styled-icons/material-outlined'
 
 const FormSignIn = () => {
   const [formError, setFormError] = useState('')
   const [fieldError, setFieldError] = useState<FieldErrors>({})
-  const [values, setValues] = useState({ email: '', password: '' })
+  const [values, setValues] = useState({ email: '' })
   const [loading, setLoading] = useState(false)
 
   const routes = useRouter()
@@ -31,7 +29,7 @@ const FormSignIn = () => {
     setLoading(true)
 
     // validations
-    const errors = signInValidate(values)
+    const errors = {} // validate after
     if (Object.keys(errors).length) {
       setFieldError(errors)
       setLoading(false)
@@ -74,29 +72,10 @@ const FormSignIn = () => {
           onInputChange={(v) => handleInput('email', v)}
           icon={<Email />}
         />
-        <TextField
-          name="password"
-          placeholder="Password"
-          type="password"
-          error={fieldError?.password}
-          onInputChange={(v) => handleInput('password', v)}
-          icon={<Lock />}
-        />
-
-        <Link href="/forgot-password" passHref>
-          <S.ForgotPassword>Forgot your password?</S.ForgotPassword>
-        </Link>
 
         <Button type="submit" size="large" fullWidth disabled={loading}>
-          {loading ? <FormLoading /> : <span>Sign in now</span>}
+          {loading ? <FormLoading /> : <span>Send email</span>}
         </Button>
-
-        <FormLink>
-          Don’t have an account?{' '}
-          <Link href="/sign-up">
-            <a>Sign Up</a>
-          </Link>
-        </FormLink>
       </form>
     </FormWrapper>
   )
