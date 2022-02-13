@@ -7,14 +7,14 @@ import { FormWrapper, FormLoading, FormError } from 'components/Form'
 import TextField from 'components/TextField'
 import Button from 'components/Button'
 
-import { FieldErrors } from 'utils/validations'
+import { FieldErrors, resetValidate } from 'utils/validations'
 
 import { Lock, ErrorOutline } from 'styled-icons/material-outlined'
 
 const FormResetPassword = () => {
   const [formError, setFormError] = useState('')
   const [fieldError, setFieldError] = useState<FieldErrors>({})
-  const [values, setValues] = useState({ password: '', confirmPassword: '' })
+  const [values, setValues] = useState({ password: '', confirm_password: '' })
   const [loading, setLoading] = useState(false)
 
   const routes = useRouter()
@@ -29,7 +29,7 @@ const FormResetPassword = () => {
     setLoading(true)
 
     // validations
-    const errors = {} // validate after
+    const errors = resetValidate(values)
     if (Object.keys(errors).length) {
       setFieldError(errors)
       setLoading(false)

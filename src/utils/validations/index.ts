@@ -17,6 +17,13 @@ export type FieldErrors = {
   [key: string]: string
 }
 
+type ForgotValidateParams = Pick<UsersPermissionsRegisterInput, 'email'>
+
+type ResetValidateParams = {
+  password: string
+  confirm_password: string
+}
+
 // método para tratar os errors retornados quando houver
 function getFieldErrors(objError: Joi.ValidationResult) {
   const errors: FieldErrors = {}
@@ -43,6 +50,22 @@ type SignInValues = Omit<UsersPermissionsRegisterInput, 'username'>
 export function signInValidate(values: SignInValues) {
   const { email, password } = fieldsValidations
   const schema = Joi.object({ email, password })
+
+  return getFieldErrors(schema.validate(values, { abortEarly: false }))
+}
+
+// validate do form para recuperar senha
+export function forgotValidate(values: ForgotValidateParams) {
+  const { email } = fieldsValidations
+  const schema = Joi.object({ email })
+
+  return getFieldErrors(schema.validate(values, { abortEarly: false }))
+}
+
+// validate do form para resetar senha
+export function resetValidate(values: ResetValidateParams) {
+  const { password, confirm_password } = fieldsValidations
+  const schema = Joi.object({ password, confirm_password })
 
   return getFieldErrors(schema.validate(values, { abortEarly: false }))
 }

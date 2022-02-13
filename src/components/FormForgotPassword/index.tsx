@@ -7,7 +7,7 @@ import { FormWrapper, FormLoading, FormError } from 'components/Form'
 import TextField from 'components/TextField'
 import Button from 'components/Button'
 
-import { FieldErrors } from 'utils/validations'
+import { FieldErrors, forgotValidate } from 'utils/validations'
 
 import { Email, ErrorOutline } from 'styled-icons/material-outlined'
 
@@ -29,7 +29,7 @@ const FormSignIn = () => {
     setLoading(true)
 
     // validations
-    const errors = {} // validate after
+    const errors = forgotValidate(values)
     if (Object.keys(errors).length) {
       setFieldError(errors)
       setLoading(false)
