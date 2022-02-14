@@ -1,8 +1,6 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 
-import { signIn } from 'next-auth/client'
-
 import { FormWrapper, FormLoading, FormError } from 'components/Form'
 import TextField from 'components/TextField'
 import Button from 'components/Button'
@@ -10,6 +8,7 @@ import Button from 'components/Button'
 import { FieldErrors, resetValidate } from 'utils/validations'
 
 import { Lock, ErrorOutline } from 'styled-icons/material-outlined'
+import { signIn } from 'next-auth/client'
 
 const FormResetPassword = () => {
   const [formError, setFormError] = useState('')
@@ -17,8 +16,7 @@ const FormResetPassword = () => {
   const [values, setValues] = useState({ password: '', confirm_password: '' })
   const [loading, setLoading] = useState(false)
 
-  const routes = useRouter()
-  const { push, query } = routes
+  const { query } = useRouter()
 
   const handleInput = (field: string, value: string) => {
     setValues((s) => ({ ...s, [field]: value }))
@@ -38,21 +36,37 @@ const FormResetPassword = () => {
 
     setFieldError({})
 
-    // sign in
-    const result = await signIn('credentials', {
-      ...values,
-      redirect: false,
-      callbackUrl: `${window.location.origin}${query?.callbackUrl || ''}`
-    })
+    // enviando um POST para API com o codigo, password e confirm_password para alterar a senha
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/auth/reset-password`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          password: values.password,
+          passwordConfirmation: values.confirm_password,
+          code: query.code
+        })
+      }
+    )
 
-    if (result?.url) {
-      return push(result?.url)
+    // pegando e tratando a resposta da API
+    const data = await response.json()
+
+    if (data.error) {
+      // se houver erro
+      setFormError(data.message[0].messages[0].message)
+      setLoading(false)
+    } else {
+      // se a senha for alterada com sucesso fazer login
+      signIn('credentials', {
+        email: data.user.email,
+        password: values.password,
+        callbackUrl: '/'
+      })
     }
-
-    setLoading(false)
-
-    // se houver erro na autenticação
-    setFormError('username or password is invalid')
   }
 
   return (
