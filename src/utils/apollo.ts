@@ -3,7 +3,7 @@ import { ApolloClient, HttpLink, NormalizedCacheObject } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
 import apolloCache from './apolloCache'
 
-import { Session } from 'next-auth/client'
+import { Session } from 'next-auth'
 
 let apolloClient: ApolloClient<NormalizedCacheObject | null>
 
@@ -16,7 +16,7 @@ function createApolloClient(session?: Session | null) {
     // permite que session venha do serverSide ou clientSide
     const jwt = session?.jwt || clientSession?.jwt || ''
 
-    const authorization = jwt ? `Bearer ${session?.jwt}` : ''
+    const authorization = jwt ? `Bearer ${jwt}` : ''
     return { headers: { ...headers, authorization } }
   })
 

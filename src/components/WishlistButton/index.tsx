@@ -1,7 +1,9 @@
+import { useState } from 'react'
 import { useSession } from 'next-auth/client'
+import { useWishlist } from 'hooks/use-wishlist'
 
 import Button, { ButtonProps } from 'components/Button'
-import { useWishlist } from 'hooks/use-wishlist'
+import Spinner from 'components/Spinner'
 
 import { Favorite, FavoriteBorder } from 'styled-icons/material-outlined'
 
@@ -16,10 +18,13 @@ const WishlistButton = ({
   size = 'small'
 }: WishlistButtonProps) => {
   const [session] = useSession()
+  const [loading, setLoading] = useState(false)
   const { isInWishlist, addToWishlist, removeFromWishlist } = useWishlist()
 
-  const handleClick = () => {
-    isInWishlist(id) ? removeFromWishlist(id) : addToWishlist(id)
+  const handleClick = async () => {
+    setLoading(true)
+    isInWishlist(id) ? await removeFromWishlist(id) : await addToWishlist(id)
+    setLoading(false)
   }
 
   const ButtonText = isInWishlist(id)
@@ -31,7 +36,9 @@ const WishlistButton = ({
   return (
     <Button
       icon={
-        isInWishlist(id) ? (
+        loading ? (
+          <Spinner />
+        ) : isInWishlist(id) ? (
           <Favorite aria-label={ButtonText} />
         ) : (
           <FavoriteBorder aria-label={ButtonText} />
