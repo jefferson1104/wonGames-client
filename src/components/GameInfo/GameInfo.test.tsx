@@ -1,3 +1,4 @@
+import 'session.mock'
 import { render, screen } from 'utils/test-utils'
 
 import GameInfo from '.'
@@ -26,7 +27,9 @@ describe('GameInfo component', () => {
     render(<GameInfo {...props} />)
 
     const addToCartButton = screen.getByRole('button', { name: /add to cart/i })
-    const wishlistButton = screen.getByRole('button', { name: /wishlist/i })
+    const wishlistButton = screen.getByRole('button', {
+      name: /add to wishlist/i
+    })
 
     expect(addToCartButton).toBeInTheDocument()
     expect(wishlistButton).toBeInTheDocument()
