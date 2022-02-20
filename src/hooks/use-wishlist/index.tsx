@@ -40,10 +40,6 @@ const WishlistProvider = ({ children }: WishlistProviderProps) => {
     QueryWishlist_wishlists_games[]
   >([])
 
-  const isInWishlist = (id: string) => false
-  const addToWishlist = (id: string) => {}
-  const removeFromWishlist = (id: string) => {}
-
   // buscando games da wishlist, somente se houver uma session
   const { data, loading } = useQueryWishlist({
     skip: !session?.user?.email,
@@ -57,6 +53,16 @@ const WishlistProvider = ({ children }: WishlistProviderProps) => {
   useEffect(() => {
     setWishlistItems(data?.wishlists[0]?.games || [])
   }, [data])
+
+  // verifica se o id do jogo esta na wishlist
+  const isInWishlist = (id: string) =>
+    !!wishlistItems.find((game) => game.id === id)
+
+  // adiciona o jogo na wishlist
+  const addToWishlist = (id: string) => {}
+
+  // remove o jogo da wishlist
+  const removeFromWishlist = (id: string) => {}
 
   return (
     <WishlistContext.Provider
