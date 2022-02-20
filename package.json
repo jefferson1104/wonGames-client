@@ -36,7 +36,7 @@
     "joi": "^17.6.0",
     "lodash.xor": "^4.5.0",
     "next": "12.0.4",
-    "next-auth": "^3.11.2",
+    "next-auth": "^3.27.0",
     "next-pwa": "^5.4.0",
     "nextjs-progressbar": "^0.0.13",
     "react": "17.0.2",

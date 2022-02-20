@@ -1,28 +1,32 @@
 import Base from 'templates/Base'
 
+import { useWishlist } from 'hooks/use-wishlist'
+
 import Heading from 'components/Heading'
 import GameCard, { GameCardProps } from 'components/GameCard'
 import Showcase from 'components/Showcase'
-
 import { Container } from 'components/Container'
 import { Grid } from 'components/Grid'
 import { Divider } from 'components/Divider'
 import { HighlightProps } from 'components/Highlight'
 import Empty from 'components/Empty'
+import Loader from 'components/Loader'
+
+import * as S from './styles'
 
 export type WishlistTemplateprops = {
-  games?: GameCardProps[]
   recommendedTitle: string
   recommendedGames: GameCardProps[]
   recommendedHighlight: HighlightProps
 }
 
 const Wishlist = ({
-  games,
   recommendedTitle,
   recommendedGames,
   recommendedHighlight
 }: WishlistTemplateprops) => {
+  const { items, loading } = useWishlist()
+
   return (
     <Base>
       <Container>
@@ -30,9 +34,13 @@ const Wishlist = ({
           Wishlist
         </Heading>
 
-        {games && games.length >= 1 ? (
+        {loading ? (
+          <S.Loading>
+            <Loader />
+          </S.Loading>
+        ) : items.length >= 1 ? (
           <Grid>
-            {games?.map((game, index) => (
+            {items?.map((game, index) => (
               <GameCard key={`wishlist-${index}`} {...game} />
             ))}
           </Grid>
@@ -43,7 +51,6 @@ const Wishlist = ({
             hasLink
           />
         )}
-
         <Divider />
       </Container>
 

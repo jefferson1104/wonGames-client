@@ -1,9 +1,8 @@
 import { useMemo } from 'react'
+import { Session } from 'next-auth'
 import { ApolloClient, HttpLink, NormalizedCacheObject } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
 import apolloCache from './apolloCache'
-
-import { Session } from 'next-auth'
 
 let apolloClient: ApolloClient<NormalizedCacheObject | null>
 
@@ -48,7 +47,7 @@ export function initializeApollo(
   return apolloClient
 }
 
-export function useApollo(initialState = null, session?: Session | null) {
+export function useApollo(initialState = null, session?: Session) {
   const store = useMemo(
     () => initializeApollo(initialState, session),
     [initialState, session]
