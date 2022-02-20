@@ -70,7 +70,7 @@ const WishlistProvider = ({ children }: WishlistProviderProps) => {
   )
 
   // buscando games da wishlist, somente se houver uma session
-  const { data, loading } = useQueryWishlist({
+  const { data, loading: loadingQuery } = useQueryWishlist({
     skip: !session?.user?.email,
     context: { session },
     variables: {
@@ -85,7 +85,7 @@ const WishlistProvider = ({ children }: WishlistProviderProps) => {
   }, [data])
 
   // wishlistItems atualizou? este metodo é chamado e retorna o id dos games
-  const wishListIds = useMemo(
+  const wishlistIds = useMemo(
     () => wishlistItems.map((game) => game.id),
     [wishlistItems]
   )
@@ -99,7 +99,7 @@ const WishlistProvider = ({ children }: WishlistProviderProps) => {
     // se nao existir a wishlist entao cria-se
     if (!wishlistId) {
       return createList({
-        variables: { input: { data: { games: [...wishListIds, id] } } }
+        variables: { input: { data: { games: [...wishlistIds, id] } } }
       })
     }
 
@@ -108,14 +108,23 @@ const WishlistProvider = ({ children }: WishlistProviderProps) => {
       variables: {
         input: {
           where: { id: wishlistId },
-          data: { games: [...wishListIds, id] }
+          data: { games: [...wishlistIds, id] }
         }
       }
     })
   }
 
   // remove o jogo da wishlist
-  const removeFromWishlist = (id: string) => {}
+  const removeFromWishlist = (id: string) => {
+    updateList({
+      variables: {
+        input: {
+          where: { id: wishlistId },
+          data: { games: wishlistIds.filter((gameId: string) => gameId !== id) }
+        }
+      }
+    })
+  }
 
   return (
     <WishlistContext.Provider
@@ -124,7 +133,7 @@ const WishlistProvider = ({ children }: WishlistProviderProps) => {
         isInWishlist,
         addToWishlist,
         removeFromWishlist,
-        loading
+        loading: loadingQuery || loadingCreate || loadingUpdate
       }}
     >
       {children}
