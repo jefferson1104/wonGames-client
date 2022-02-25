@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 import { Session } from 'next-auth/client'
 
 import { useCart } from 'hooks/use-cart'
@@ -18,6 +19,7 @@ type PaymentFormProps = {
 }
 
 const PaymentForm = ({ session }: PaymentFormProps) => {
+  const { push } = useRouter()
   const { items } = useCart()
   const stripe = useStripe()
   const elements = useElements()
@@ -65,6 +67,14 @@ const PaymentForm = ({ session }: PaymentFormProps) => {
     event.preventDefault()
     setLoading(true)
 
+    // Se for freeGames (gratuito)
+    if (freeGames) {
+      // salva no banco de dados
+      // redireciona para /success
+      push('/success')
+      return
+    }
+
     const payload = await stripe!.confirmCardPayment(clientSecret, {
       payment_method: {
         card: elements!.getElement(CardElement)!
@@ -78,8 +88,9 @@ const PaymentForm = ({ session }: PaymentFormProps) => {
       setError(null)
       setLoading(false)
 
-      // salva a compra no banco de dados do backend (strapi)
-      // redireciona para uma pagina de sucesso
+      // salva no banco de dados
+      // redireciona para /success
+      push('/success')
     }
   }
 
