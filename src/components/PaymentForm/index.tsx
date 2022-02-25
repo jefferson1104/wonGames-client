@@ -26,13 +26,14 @@ const PaymentForm = ({ session }: PaymentFormProps) => {
   useEffect(() => {
     async function setPaymentMode() {
       if (items.length) {
+        setFreeGames(false)
+
         // fazer request na api /orders/create-payment-intent e enviar os items do carrinho
         const data = await createPaymentIntent({ items, token: session.jwt })
 
         // se receber freeGames: true, então setFreeGames e faz o fluxo de jogos gratuitos
         if (data.freeGames) {
           setFreeGames(true)
-          console.log('FREEGAMES =', data.freeGames)
           return
         }
 
@@ -44,7 +45,6 @@ const PaymentForm = ({ session }: PaymentFormProps) => {
 
         // se der tudo certo será criado um novo paymentIntent e agora fazemos o setClientSecret
         setClientSecret(data.client_secret)
-        console.log('CLIENT SECRET =', data.client_secret)
       }
     }
 
@@ -62,17 +62,22 @@ const PaymentForm = ({ session }: PaymentFormProps) => {
         <Heading color="black" lineBottom size="small">
           Payment
         </Heading>
-        <CardElement
-          options={{
-            hidePostalCode: true,
-            style: {
-              base: {
-                fontSize: '16px'
+        {freeGames ? (
+          <S.FreeGames>Only free games, click buy and enjoy!</S.FreeGames>
+        ) : (
+          <CardElement
+            options={{
+              hidePostalCode: true,
+              style: {
+                base: {
+                  fontSize: '16px'
+                }
               }
-            }
-          }}
-          onChange={handleChange}
-        />
+            }}
+            onChange={handleChange}
+          />
+        )}
+
         {error && (
           <S.Error>
             <ErrorOutline size={20} />
@@ -87,7 +92,7 @@ const PaymentForm = ({ session }: PaymentFormProps) => {
         <Button
           fullWidth
           icon={<ShoppingCart />}
-          disabled={disabled || !!error}
+          disabled={!freeGames && (disabled || !!error)}
         >
           Buy now
         </Button>
