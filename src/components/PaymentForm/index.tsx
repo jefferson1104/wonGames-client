@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { Session } from 'next-auth/client'
 
+import { useCart } from 'hooks/use-cart'
+import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
 import { StripeCardElementChangeEvent } from '@stripe/stripe-js'
-import { CardElement } from '@stripe/react-stripe-js'
+import { createPaymentIntent } from 'utils/stripe/methods'
+
 import Button from 'components/Button'
 import Heading from 'components/Heading'
-
-import { useCart } from 'hooks/use-cart'
-import { createPaymentIntent } from 'utils/stripe/methods'
+import { FormLoading } from 'components/Form'
 
 import { ErrorOutline, ShoppingCart } from 'styled-icons/material-outlined'
 import * as S from './styles'
-import { FormLoading } from 'components/Form'
 
 type PaymentFormProps = {
   session: Session
@@ -19,6 +19,9 @@ type PaymentFormProps = {
 
 const PaymentForm = ({ session }: PaymentFormProps) => {
   const { items } = useCart()
+  const stripe = useStripe()
+  const elements = useElements()
+
   const [error, setError] = useState<string | null>(null)
   const [disabled, setDisabled] = useState(true)
   const [clientSecret, setClientSecret] = useState('')
@@ -40,7 +43,7 @@ const PaymentForm = ({ session }: PaymentFormProps) => {
         }
 
         // se receber um erro, setError
-        if (error) {
+        if (data.error) {
           setError(data.error)
           return
         }
@@ -61,6 +64,25 @@ const PaymentForm = ({ session }: PaymentFormProps) => {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
     setLoading(true)
+
+    const payload = await stripe!.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: elements!.getElement(CardElement)!
+      }
+    })
+
+    if (payload.error) {
+      setError(`Payment failed ${payload.error.message}`)
+      setLoading(false)
+    } else {
+      setError(null)
+      setLoading(false)
+
+      console.log('SUA COMPRA FOI CONCLUIDA COM SUCESSO!!')
+
+      // salva a compra no banco de dados do backend (strapi)
+      // redireciona para uma pagina de sucesso
+    }
   }
 
   return (
@@ -100,7 +122,7 @@ const PaymentForm = ({ session }: PaymentFormProps) => {
           <Button
             fullWidth
             icon={loading ? <FormLoading /> : <ShoppingCart />}
-            disabled={!freeGames && (disabled || !!error)}
+            disabled={!freeGames && (disabled || !!error || loading)}
           >
             {!loading && <span>Buy now</span>}
           </Button>
