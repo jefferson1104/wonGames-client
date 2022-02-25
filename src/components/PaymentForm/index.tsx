@@ -78,8 +78,6 @@ const PaymentForm = ({ session }: PaymentFormProps) => {
       setError(null)
       setLoading(false)
 
-      console.log('SUA COMPRA FOI CONCLUIDA COM SUCESSO!!')
-
       // salva a compra no banco de dados do backend (strapi)
       // redireciona para uma pagina de sucesso
     }
