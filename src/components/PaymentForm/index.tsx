@@ -4,8 +4,8 @@ import { Session } from 'next-auth/client'
 
 import { useCart } from 'hooks/use-cart'
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js'
-import { StripeCardElementChangeEvent } from '@stripe/stripe-js'
-import { createPaymentIntent } from 'utils/stripe/methods'
+import { PaymentIntent, StripeCardElementChangeEvent } from '@stripe/stripe-js'
+import { createPayment, createPaymentIntent } from 'utils/stripe/methods'
 
 import Button from 'components/Button'
 import Heading from 'components/Heading'
@@ -63,14 +63,25 @@ const PaymentForm = ({ session }: PaymentFormProps) => {
     setError(event.error ? event.error.message : '')
   }
 
+  const saveOrder = async (paymentIntent?: PaymentIntent) => {
+    const data = await createPayment({
+      items,
+      paymentIntent,
+      token: session.jwt
+    })
+
+    return data
+  }
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault()
     setLoading(true)
 
     // Se for freeGames (gratuito)
     if (freeGames) {
-      // bate na api /orders
-      // salva no banco de dados
+      // bate na api /orders e salva no banco de dados
+      saveOrder()
+
       // redireciona para /success
       push('/success')
       return
@@ -89,7 +100,9 @@ const PaymentForm = ({ session }: PaymentFormProps) => {
       setError(null)
       setLoading(false)
 
-      // salva no banco de dados
+      // bate na api /orders e salva no banco de dados
+      saveOrder(payload.paymentIntent)
+
       // redireciona para /success
       push('/success')
     }
