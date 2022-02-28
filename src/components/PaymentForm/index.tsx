@@ -69,6 +69,7 @@ const PaymentForm = ({ session }: PaymentFormProps) => {
 
     // Se for freeGames (gratuito)
     if (freeGames) {
+      // bate na api /orders
       // salva no banco de dados
       // redireciona para /success
       push('/success')
