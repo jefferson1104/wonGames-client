@@ -1,8 +1,8 @@
 import Heading from 'components/Heading'
 import GameItem, { GameItemProps } from 'components/GameItem'
+import Empty from 'components/Empty'
 
 import * as S from './styles'
-import Empty from 'components/Empty'
 
 export type OrdersListProps = {
   items?: GameItemProps[]
