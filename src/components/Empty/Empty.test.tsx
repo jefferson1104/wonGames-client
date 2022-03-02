@@ -11,7 +11,7 @@ describe('Empty component', () => {
   it('should render correctly', () => {
     const { container } = render(<Empty {...propsMock} hasLink />)
 
-    const image = screen.getByRole('image', {
+    const image = screen.getByRole('img', {
       name: /a gamer in a couch playing videogame/i
     })
     const title = screen.getByRole('heading', { name: /a simple title/i })
