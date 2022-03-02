@@ -1,7 +1,14 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { render, screen } from 'utils/test-utils'
 import userEvent from '@testing-library/user-event'
 
 import UserDropdown from '.'
+
+// Mock do useRouter
+const useRouter = jest.spyOn(require('next/router'), 'useRouter')
+useRouter.mockImplementation(() => ({
+  query: {}
+}))
 
 describe('UserDropdown component', () => {
   it('should render the username', () => {

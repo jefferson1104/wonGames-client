@@ -1,7 +1,14 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { render, screen } from 'utils/test-utils'
 import theme from 'styles/theme'
 
 import ProfileMenu from '.'
+
+// Mock do useRouter
+const useRouter = jest.spyOn(require('next/router'), 'useRouter')
+useRouter.mockImplementation(() => ({
+  query: {}
+}))
 
 describe('ProfileMenu component', () => {
   it('should render the menu', () => {

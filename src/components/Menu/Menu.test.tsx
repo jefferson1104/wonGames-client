@@ -1,6 +1,13 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { render, screen, fireEvent } from 'utils/test-utils'
 
 import Menu from '.'
+
+// Mock do useRouter
+const useRouter = jest.spyOn(require('next/router'), 'useRouter')
+useRouter.mockImplementation(() => ({
+  query: {}
+}))
 
 describe('Menu component', () => {
   it('should render the menu', () => {
