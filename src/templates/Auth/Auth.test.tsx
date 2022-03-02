@@ -11,7 +11,7 @@ describe('Auth Page', () => {
     )
 
     // verifica se existe 2 logos
-    const logos = screen.getAllByRole('img', { name: /won games/i })
+    const logos = screen.getAllByRole('img', { name: 'Won Games' })
     expect(logos).toHaveLength(2)
 
     // verifica se tem o heading principal do banner
