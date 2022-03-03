@@ -84,6 +84,8 @@ const Gallery = ({ items }: GalleryProps) => {
       <Slider ref={slider} settings={settings}>
         {items.map((item, index) => (
           <Image
+            width={295}
+            height={165}
             role="button"
             key={`thumb-${index}`}
             src={item.src}
