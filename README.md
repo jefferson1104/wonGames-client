@@ -23,3 +23,9 @@ $ maildev
 # abrir no endereço
 http://0.0.0.0:1080
 ```
+
+### CYPRESS TESTS
+```bash
+# abrir cypress GUI
+$ yarn cy:open
+```
