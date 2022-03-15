@@ -29,6 +29,10 @@ import '@testing-library/cypress/add-commands'
 
 Cypress.Commands.add('google', () => cy.visit('https://google.com'))
 
+Cypress.Commands.add('getByDataCy', (selector, ...args) => {
+  return cy.get(`[data-cy=${selector}]`, ...args)
+})
+
 Cypress.Commands.add('shouldRenderBanner', () => {
   // pegando o slider e o conteudo dentro dele com o metodo within()
   cy.get('.slick-slider').within(() => {
@@ -49,18 +53,18 @@ Cypress.Commands.add('shouldRenderBanner', () => {
 
 Cypress.Commands.add('shouldRenderShowcase', ({ name, highlight = false }) => {
   // exemplo de teste utilizando o common assertion e condicionais nos comandos
-  cy.get(`[data-cy="${name}"]`).within(() => {
+  cy.getByDataCy(`"${name}"`).within(() => {
     cy.findByRole('heading', { name }).should('exist')
 
     // ex testando gamecard dentro da showcase usando assertions
-    cy.get(`[data-cy="game-card"]`).should('have.length.gt', 0)
+    cy.getByDataCy('game-card').should('have.length.gt', 0)
 
     // ex com condicionais e assertions para verificar se exite o highlight
-    cy.get(`[data-cy="highlight"]`).should(highlight ? 'exist' : 'not.exist')
+    cy.getByDataCy('highlight').should(highlight ? 'exist' : 'not.exist')
 
     // ex com condicionais e assertions, para pegar links dentro do highlight
     if (highlight) {
-      cy.get(`[data-cy="highlight"]`).within(() => {
+      cy.getByDataCy('highlight').within(() => {
         cy.findByRole('link').should('have.attr', 'href')
       })
     }

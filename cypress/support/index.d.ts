@@ -16,6 +16,13 @@ declare namespace Cypress {
 
 
     /**
+     * custom command to get element by data-cy values
+     * @example cy.getByDataCy('selector')
+    */
+     getByDataCy(selector: string): Chainable<Element>
+
+
+    /**
      * custom command to check banner in page
      * @example cy.shouldRenderBanner()
     */
@@ -24,7 +31,7 @@ declare namespace Cypress {
 
     /**
      * custom command to check showcase in page
-     * @example cy.shouldRenderShowcase()
+     * @example cy.shouldRenderShowcase({ name: 'Showcase', highlight: true })
     */
     shouldRenderShowcase(attrs: ShowCaseAtributes): Chainable<Element>
   }
