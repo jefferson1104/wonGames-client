@@ -52,6 +52,9 @@ Cypress.Commands.add('shouldRenderShowcase', ({ name, highlight = false }) => {
   cy.get(`[data-cy="${name}"]`).within(() => {
     cy.findByRole('heading', { name }).should('exist')
 
+    // ex testando gamecard dentro da showcase usando assertions
+    cy.get(`[data-cy="game-card"]`).should('have.length.gt', 0)
+
     // ex com condicionais e assertions para verificar se exite o highlight
     cy.get(`[data-cy="highlight"]`).should(highlight ? 'exist' : 'not.exist')
 
