@@ -39,3 +39,7 @@ public/workbox-*.js
 
 # storybook build
 /storybook-static
+
+# cypress
+cypress/screenshots
+cypress/videos

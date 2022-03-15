@@ -26,6 +26,9 @@ http://0.0.0.0:1080
 
 ### CYPRESS TESTS
 ```bash
-# abrir cypress GUI
+# Rodar testes com o cypress atraves de uma interface e browser
 $ yarn cy:open
+
+# Rodar testes com o cypress pelo terminal
+$ yarn cy:run
 ```

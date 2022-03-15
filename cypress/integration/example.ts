@@ -1,11 +1,11 @@
 /// <reference path="../support/index.d.ts" />
 
 describe('Cypress TS', () => {
-  it.skip('Should go to go google', () => {
+  it('Should go to go google', () => {
     cy.google()
   })
 
-  it.skip('Should change light/dark theme on willian justen website', () => {
+  it('Should change light/dark theme on willian justen website', () => {
     cy.visit('https://willianjusten.com.br')
 
     cy.findByTitle(/Mudar o tema/i).click()
