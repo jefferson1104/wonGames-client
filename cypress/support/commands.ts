@@ -46,3 +46,20 @@ Cypress.Commands.add('shouldRenderBanner', () => {
     cy.findByRole('heading', { name: /STALKER/i })
   })
 })
+
+Cypress.Commands.add('shouldRenderShowcase', ({ name, highlight = false }) => {
+  // exemplo de teste utilizando o common assertion e condicionais nos comandos
+  cy.get(`[data-cy="${name}"]`).within(() => {
+    cy.findByRole('heading', { name }).should('exist')
+
+    // ex com condicionais e assertions para verificar se exite o highlight
+    cy.get(`[data-cy="highlight"]`).should(highlight ? 'exist' : 'not.exist')
+
+    // ex com condicionais e assertions, para pegar links dentro do highlight
+    if (highlight) {
+      cy.get(`[data-cy="highlight"]`).within(() => {
+        cy.findByRole('link').should('have.attr', 'href')
+      })
+    }
+  })
+})
