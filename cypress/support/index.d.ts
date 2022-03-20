@@ -1,9 +1,14 @@
-// load type definitions from cypress module
+// load type definitions from Cypress module
 /// <reference types="cypress" />
 
 type ShowCaseAtributes = {
   name: string
   highlight?: boolean
+}
+
+type FieldsAttributes = {
+  label: string
+  name: string | number
 }
 
 declare namespace Cypress {
@@ -19,7 +24,14 @@ declare namespace Cypress {
      * custom command to get element by data-cy values
      * @example cy.getByDataCy('selector')
     */
-     getByDataCy(selector: string): Chainable<Element>
+    getByDataCy(selector: string): Chainable<Element>
+
+
+    /**
+     * Custom command to get fields by label
+     * @example cy.getFields([{ label: 'foo', name: 'foo' }])
+    */
+    getFields(fields: FieldsAttributes[]): Chainable<Element>
 
 
     /**
