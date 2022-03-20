@@ -31,4 +31,7 @@ $ yarn cy:open
 
 # Rodar testes com o cypress pelo terminal
 $ yarn cy:run
+
+# Rodar projeto com yarn dev e os testes e2e
+$ yarn test:e2e
 ```
