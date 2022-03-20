@@ -4,7 +4,7 @@ describe('Game Page', () => {
   it('Should render game page sections', () => {
     cy.visit('/game/cyberpunk-2077')
 
-    // gameInfo
+    // game info
     cy.getByDataCy('game-info').within(() => {
       cy.findByRole('heading', { name: /cyberpunk 2077/i }).should('exist')
       cy.findByText(/^Cyberpunk 2077 is an open-world/i ).should('exist')
@@ -19,7 +19,27 @@ describe('Game Page', () => {
     cy.getByDataCy('content').within(() => {
       cy.findByRole('heading', { name: /description/i }).should('exist')
     })
-
     cy.getByDataCy('content').children().should('have.length.at.least', 2)
+
+    // game details
+    cy.getByDataCy('game-details').within(() => {
+      cy.findByRole('heading', { name: /game details/i }).should('exist')
+      cy.findByRole('heading', { name: /developer/i }).should('exist')
+      cy.findByRole('heading', { name: /release date/i }).should('exist')
+      cy.findByRole('heading', { name: /platforms/i }).should('exist')
+      cy.findByRole('heading', { name: /publisher/i }).should('exist')
+      cy.findByRole('heading', { name: /rating/i }).should('exist')
+      cy.findByRole('heading', { name: /genres/i }).should('exist')
+
+      cy.findAllByText(/cd projekt red/i).should('have.length', 2)
+      cy.findByText(/dec 8, 2020/i).should('exist')
+      cy.findByRole('img', { name: /windows/i }).should('exist')
+      cy.findByText(/18\+/i).should('exist')
+      cy.findByText('Role-playing / Sci-fi / Action').should('exist')
+    })
+
+    // show cases
+    cy.shouldRenderShowcase({ name: 'Upcoming Games', highlight: true })
+    cy.shouldRenderShowcase({ name: 'You may like these games', highlight: false})
   })
 })
