@@ -76,3 +76,29 @@ Cypress.Commands.add('getFields', (fields) => {
     cy.findByText(label).should('exist')
   })
 })
+
+Cypress.Commands.add('shouldBeGreaterThan', (value) => {
+  // com regex pegamos o numero
+  // com invoke transformamos em texto
+  // com then removemos o '$' e em seguida com parseFloat transformamos em numero
+  // no fim com o should fazemos a comparação
+  cy
+    .findByText(/^\$\d+(\.\d{1,2})?/)
+    .invoke('text')
+    .then($el => $el.replace('$', ''))
+    .then(parseFloat)
+    .should('be.gt', value)
+})
+
+Cypress.Commands.add('shouldBeLessThan', (value) => {
+  // com regex pegamos o numero
+  // com invoke transformamos em texto
+  // com then removemos o '$' e em seguida com parseFloat transformamos em numero
+  // no fim com o should fazemos a comparação
+  cy
+    .findByText(/^\$\d+(\.\d{1,2})?/)
+    .invoke('text')
+    .then($el => $el.replace('$', ''))
+    .then(parseFloat)
+    .should('be.lt', value)
+})
