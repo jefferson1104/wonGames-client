@@ -34,6 +34,13 @@ declare namespace Cypress {
 
 
     /**
+     * Custom command to sign up
+     * @example cy.signIn()
+    */
+    signIn(email?: string, password?: string): Chainable<Element>
+
+
+    /**
      * custom command to get element by data-cy values
      * @example cy.getByDataCy('selector')
     */
