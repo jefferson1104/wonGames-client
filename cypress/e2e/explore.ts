@@ -76,4 +76,30 @@ describe('Explore Page', () => {
       cy.shouldBeLessThan(500)
     })
   })
+
+  it('Should filter by platform and genre', () => {
+    cy.findByText(/windows/i).click()
+    cy.location('href').should('contain', 'platforms=windows')
+
+    cy.findByText(/linux/i).click()
+    cy.location('href').should('contain', 'platforms=linux')
+
+    cy.findByText(/mac os/i).click()
+    cy.location('href').should('contain', 'platforms=mac')
+
+    cy.findByText(/action/i).click()
+    cy.location('href').should('contain', 'categories=action')
+  })
+
+  it('Should return empty when no games match', () => {
+    cy.visit('/games')
+
+    // combinação de filtros que retorna um resultado sem jogos
+    cy.findByText('Free').click()
+    cy.findByText('Linux').click()
+    cy.findByText('Sports').click()
+
+    cy.getByDataCy('game-card').should('not.exist')
+    cy.findByText(/We didn't find any games with this filter/i).should('exist')
+  })
 })
