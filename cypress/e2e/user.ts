@@ -3,7 +3,7 @@
 import { createUser } from '../support/generate'
 
 describe('User', () => {
-  it.skip('Should sign up', () => {
+  it('Should sign up', () => {
     const user = createUser()
 
     cy.visit('/sign-up')
@@ -13,7 +13,7 @@ describe('User', () => {
     cy.findByText(user.username).should('exist')
   })
 
-  it.skip('Should sign in and sign out', () => {
+  it('Should sign in and sign out', () => {
     cy.visit('/sign-in')
 
     cy.signIn()
