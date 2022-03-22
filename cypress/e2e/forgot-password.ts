@@ -1,7 +1,5 @@
 /// <reference path="../support/index.d.ts" />
 
-import { find } from "cypress/types/lodash"
-
 describe('Forgot Password', () => {
   it('Should fill the input and receive a success message', () => {
     // intercepta qualquer chamada e retorna sucesso
