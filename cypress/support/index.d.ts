@@ -79,5 +79,19 @@ declare namespace Cypress {
       * @example cy.shouldBeGreaterThan(100)
     */
     shouldBeGreaterThan(value: number): Chainable<Element>
+
+
+    /**
+     * Custom command to add game to cart by index.
+     * @example cy.addToCartByIndex(3)
+    */
+     addToCartByIndex(index: number): Chainable<Element>
+
+
+    /**
+     * Custom command to remove game from cart by index.
+     * @example cy.removeFromCartByIndex(2)
+    */
+     removeFromCartByIndex(index: number): Chainable<Element>
   }
 }
