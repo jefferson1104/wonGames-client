@@ -1,37 +1,63 @@
-### MINIMAL NODE VERSION
-`14xxx`
+<h2 align="center">
+  Won Games
+</h2>
 
+<p align="center">
+  <img src="public/screenshots/screenshot-01.png" width='500'>
+</p>
 
-### GRAPHQL TIPAGENS
-> NOTE: Toda vez que criar uma nova query do graphql, executar o comando `yarn types:generate` para gerar as tipagens do typescript pra esta query
+<p align="center">
+  <img alt="technology" src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white">
 
+  <img alt="technology" src="https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white">
 
-### MAILDEV
-Ferramenta que usamos em ambiente local para fazer o teste de envio de email com o token para o reset-password
+  <img alt="technology" src="https://img.shields.io/badge/Apollo%20GraphQL-311C87?&style=for-the-badge&logo=Apollo%20GraphQL&logoColor=white">
 
-para instalar siga a documentação clicando neste [Link](https://github.com/maildev/maildev)
+  <img alt="technology" src="https://img.shields.io/badge/storybook-FF4785?style=for-the-badge&logo=storybook&logoColor=white">
 
-ou siga as instruçõs simples abaixo:
+  <img alt="technology" src="https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=jest&logoColor=white">
+
+  <img alt="technology" src="https://img.shields.io/badge/Cypress-17202C?style=for-the-badge&logo=cypress&logoColor=white">
+</p>
+
+<br>
+
+### :writing_hand: About this project
+This is the repository of the front-end of the Won Games platform, Won Games is an online game marketplace, where you can buy and download your games, its development was with Javascript/TypeScript, React/NextJS, Apollo/GraphQL, Jest/React-testing-library, Cypress and Storybook technologies.
+
+### :cyclone: How to run this project
+> **IMPORTANT**: To run this project you need to have the database and the API of the project running, for that we have the database repository and the API repository, in each of them you can download on your machine and follow the instructions on how to leave them running.
+
+[REPOSITORY DATABASE](https://github.com/jefferson1104/wonGames-database)
+[REPOSITORY API](https://github.com/jefferson1104/wonGames-api)
+
 
 ```bash
-# instalando maildev
-$ npm install -g maildev
+# Clone this repository
+$ git clone https://github.com/jefferson1104/wonGames-client
 
-# executando
-$ maildev
+# Access the project folder
+$ cd wonGames-client
 
-# abrir no endereço
-http://0.0.0.0:1080
-```
+# Run project
+$ yarn dev
 
-### CYPRESS TESTS
-```bash
-# Rodar testes com o cypress atraves de uma interface e browser
-$ yarn cy:open
+# Run storybook
+$ yarn storybook
 
-# Rodar testes com o cypress pelo terminal
+# Run jest and react-testing-lirary tests
+$ yarn test
+
+# Run tests end to end
 $ yarn cy:run
-
-# Rodar projeto com yarn dev e os testes e2e
-$ yarn test:e2e
 ```
+### 🎨 Screenshots
+<p align="center">
+  <img src="public/screenshots/screenshot-01.png">
+  <img src="public/screenshots/screenshot-02.png">
+  <img src="public/screenshots/screenshot-03.png">
+  <img src="public/screenshots/screenshot-04.png">
+  <img src="public/screenshots/screenshot-05.png">
+  <img src="public/screenshots/screenshot-06.png">
+  <img src="public/screenshots/screenshot-07.png">
+</p>
